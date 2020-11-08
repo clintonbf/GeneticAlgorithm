@@ -123,6 +123,33 @@ depend:
 	$(MAKE) -f CMakeFiles/3522_A02.dir/build.make CMakeFiles/3522_A02.dir/build
 .PHONY : 3522_A02/fast
 
+City.o: City.cpp.o
+
+.PHONY : City.o
+
+# target to build an object file
+City.cpp.o:
+	$(MAKE) -f CMakeFiles/3522_A02.dir/build.make CMakeFiles/3522_A02.dir/City.cpp.o
+.PHONY : City.cpp.o
+
+City.i: City.cpp.i
+
+.PHONY : City.i
+
+# target to preprocess a source file
+City.cpp.i:
+	$(MAKE) -f CMakeFiles/3522_A02.dir/build.make CMakeFiles/3522_A02.dir/City.cpp.i
+.PHONY : City.cpp.i
+
+City.s: City.cpp.s
+
+.PHONY : City.s
+
+# target to generate assembly for a file
+City.cpp.s:
+	$(MAKE) -f CMakeFiles/3522_A02.dir/build.make CMakeFiles/3522_A02.dir/City.cpp.s
+.PHONY : City.cpp.s
+
 main.o: main.cpp.o
 
 .PHONY : main.o
@@ -159,6 +186,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... 3522_A02"
 	@echo "... edit_cache"
+	@echo "... City.o"
+	@echo "... City.i"
+	@echo "... City.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

@@ -80,6 +80,12 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/cygdrive/c/Users/fress/CLionProjects/COMP 3522/Assignments/3522_A02/City.cpp">
+			<Option target="3522_A02"/>
+		</Unit>
+		<Unit filename="/cygdrive/c/Users/fress/CLionProjects/COMP 3522/Assignments/3522_A02/City.hpp">
+			<Option target="3522_A02"/>
+		</Unit>
 		<Unit filename="/cygdrive/c/Users/fress/CLionProjects/COMP 3522/Assignments/3522_A02/main.cpp">
 			<Option target="3522_A02"/>
 		</Unit>

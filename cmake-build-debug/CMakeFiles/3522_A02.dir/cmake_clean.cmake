@@ -1,6 +1,7 @@
 file(REMOVE_RECURSE
   "3522_A02.exe"
   "3522_A02.pdb"
+  "CMakeFiles/3522_A02.dir/City.cpp.o"
   "CMakeFiles/3522_A02.dir/main.cpp.o"
   "lib3522_A02.dll.a"
 )
