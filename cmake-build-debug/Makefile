@@ -150,6 +150,33 @@ City.cpp.s:
 	$(MAKE) -f CMakeFiles/3522_A02.dir/build.make CMakeFiles/3522_A02.dir/City.cpp.s
 .PHONY : City.cpp.s
 
+Tour.o: Tour.cpp.o
+
+.PHONY : Tour.o
+
+# target to build an object file
+Tour.cpp.o:
+	$(MAKE) -f CMakeFiles/3522_A02.dir/build.make CMakeFiles/3522_A02.dir/Tour.cpp.o
+.PHONY : Tour.cpp.o
+
+Tour.i: Tour.cpp.i
+
+.PHONY : Tour.i
+
+# target to preprocess a source file
+Tour.cpp.i:
+	$(MAKE) -f CMakeFiles/3522_A02.dir/build.make CMakeFiles/3522_A02.dir/Tour.cpp.i
+.PHONY : Tour.cpp.i
+
+Tour.s: Tour.cpp.s
+
+.PHONY : Tour.s
+
+# target to generate assembly for a file
+Tour.cpp.s:
+	$(MAKE) -f CMakeFiles/3522_A02.dir/build.make CMakeFiles/3522_A02.dir/Tour.cpp.s
+.PHONY : Tour.cpp.s
+
 main.o: main.cpp.o
 
 .PHONY : main.o
@@ -189,6 +216,9 @@ help:
 	@echo "... City.o"
 	@echo "... City.i"
 	@echo "... City.s"
+	@echo "... Tour.o"
+	@echo "... Tour.i"
+	@echo "... Tour.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
