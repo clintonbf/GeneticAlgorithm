@@ -1,3 +1,0 @@
-/cygdrive/c/Users/fress/CLionProjects/COMP 3522/Assignments/3522_A02/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/cygdrive/c/Users/fress/CLionProjects/COMP 3522/Assignments/3522_A02/cmake-build-debug/CMakeFiles/3522_A02.dir
-/cygdrive/c/Users/fress/CLionProjects/COMP 3522/Assignments/3522_A02/cmake-build-debug/CMakeFiles/edit_cache.dir

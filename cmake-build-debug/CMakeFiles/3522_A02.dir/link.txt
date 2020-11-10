@@ -1,1 +1,0 @@
-C:/cygwin64/bin/g++.exe -g  -Wl,--enable-auto-import CMakeFiles/3522_A02.dir/main.cpp.o CMakeFiles/3522_A02.dir/City.cpp.o CMakeFiles/3522_A02.dir/Tour.cpp.o  -o 3522_A02.exe -Wl,--out-implib,lib3522_A02.dll.a -Wl,--major-image-version,0,--minor-image-version,0 
