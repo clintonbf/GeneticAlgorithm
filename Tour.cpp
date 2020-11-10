@@ -7,27 +7,50 @@
 
 #pragma once
 
+#include <algorithm>
 #include <random>
 #include "Tour.hpp"
 
-void Tour::mutate() {
 
+void Tour::mutate() {
+    random_device rd;
+    mt19937 generator(rd());
+    uniform_real_distribution<> distribution{};
+    double mutation_coeff = distribution(generator);
+    for(int i=0; i < cities.size(); i++) {
+        if (MUTATION_RATE <= mutation_coeff) {
+            continue; // do not mutate
+        }
+        // mutate
+        // first and last cities only have one adjacent city each
+        if (i == 0) {
+            swapCities(0, 1);
+            continue;
+        }
+        if (i == cities.size() - 1) {
+            swapCities(cities.size() - 2, i);
+            continue;
+        }
+        double adjacentCityChoice = distribution(generator);
+        if (adjacentCityChoice < 0.5) {
+            swapCities(i - 1, i);
+        } else {
+            swapCities(i + 1, i);
+        }
+    }
+    evaluateFitness();
 }
 
-void Tour::swapCities( const int a, const int b) {
+void Tour::swapCities( const unsigned long a, const unsigned long b) {
     City &t = cities[a];
     cities[a] = cities[b];
     cities[b] = t;
 }
 
 void Tour::randomizeOrder() {
-    random_device rd;
-    mt19937 generator(rd());
-    for ( int i = cities.size(); 0 < i ; --i ) {
-        uniform_int_distribution<> distribution(0, i);
-        int swapIndex = distribution( generator);
-        swapCities( i, swapIndex );
-    }
+    std::random_device rd;
+    std::mt19937 g(rd());
+    shuffle(cities.begin(), cities.end(), g);
 }
 
 void Tour::addCity( City &c ) {
