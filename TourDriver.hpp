@@ -24,12 +24,58 @@ private:
     Tour bestTour;
     vector<Tour> tours;
     vector<City> cities;
-    double fitness_threshold;
-    void generateTours( int numberOfTours);
+    double fitnessThreshold;
+
+    /**
+     * Print final report.
+     * @param newTour the last best tour
+     * @param baseTour the first best tour
+     */
+    void finalReport( const Tour &newTour, const Tour &baseTour, const int iterations );
+
+    /**
+     * Print iteration report.
+     * @param newTour the new best tour
+     * @param baseTour the previous best tour
+     */
+    void report( const Tour &newTour, const Tour &oldTour, const double firstBestDistance, const int iterations ) const;
+
+    /**
+     * Generates a given number of tours based on the instance cities.
+     * @param numberOfTours the number of tours
+     */
+    void generateTours( int numberOfTours );
+
+    /**
+     * Generate a given number of cities.
+     * @param numberOfCities the number of cities
+     */
     void generateCities( int numberOfCities );
+
+    /**
+     * Get the most evolved tour.
+     */
+    void makeBestTour();
+
 public:
+
+    /**
+     * Create a tour driver with a given number of cities, tours and target fitness.
+     *
+     * Will automatically generate cities, tours and evolve into the best tour
+     *
+     * @param numberOfCities the number of cities in the tour
+     * @param numberOfTours the number or tours to evaluate
+     * @param fitness_threshold the desired fitness threshold
+     */
     TourDriver( const int numberOfCities, const int numberOfTours, const double fitness_threshold );
-    Tour makeBestTour();
+
+    /**
+     * Get the best tour.
+     * @return
+     */
+    const Tour &get_best_tour() const;
+
 };
 
 

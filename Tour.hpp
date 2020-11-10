@@ -62,7 +62,13 @@ public:
      * Get the fitness.
      * @return the fitness of the tour
      */
-    double get_fitness() const;
+    double getFitness() const;
+
+    /**
+     * Get the total distance for the tour.
+     * @return the total distance
+     */
+    double getDistance() const;
 
     /**
      * Get if a tour contains a City.

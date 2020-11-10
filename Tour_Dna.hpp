@@ -25,7 +25,7 @@ private:
     vector<Tour> selectParents();
 public:
     TourDNA() = default;
-    TourDNA( vector<Tour> &tours);
+    TourDNA( vector<Tour> &tours); // TODO must evaluate the base elite tour in constructor and move to start
     double getBestFitness();
     void improve();
     Tour getBestTour();

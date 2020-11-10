@@ -9,34 +9,63 @@
  * 3522_A02
  */
 
+#include <iostream>
 #include "TourDriver.hpp"
 
-void TourDriver::generateTours( const int numberOfTours) {
+void TourDriver::generateTours( const int numberOfTours ) {
     for ( int i = 0; i < numberOfTours; ++i ) {
-        tours.emplace_back(Tour{cities});
+        tours.emplace_back( Tour{ cities } );
     }
 }
 
 void TourDriver::generateCities( const int numberOfCities ) {
     for ( int i = 0; i < numberOfCities; ++i ) {
-        cities.emplace_back(City());
+        cities.emplace_back( City());
     }
 }
 
-Tour TourDriver::makeBestTour() {
-    Tour bestTour = dna.getBestTour();
-    int iterations{ 0 };
-    while (bestTour.get_fitness() < fitness_threshold && iterations < MAX_ITER_COUNT ) {
+void TourDriver::report( const Tour &newTour, const Tour &oldTour, const double firstBestDistance,
+                         const int iterations ) const {
+    cout << "ITERATION: " << iterations << endl;
+    cout << "Best previous distance: " << oldTour.getDistance() << endl;
+    cout << "New distance" << newTour.getDistance() << endl;
+    cout << "Distance improvement" << oldTour.getDistance() - newTour.getDistance() << endl;
+    cout << "Total improvement" << firstBestDistance - newTour.getDistance() << endl;
+}
+
+void TourDriver::finalReport( const Tour &newTour, const Tour &baseTour, const int iterations ) {
+    cout << "FINAL REPORT: " << endl;
+    report( newTour, baseTour, baseTour.getDistance(), iterations );
+    cout << "Fitness target achieved: " << boolalpha << ( fitnessThreshold <= newTour.getFitness()) << endl;
+    cout << "The best tour: " << newTour << endl;
+    cout << "The initial tour: " << baseTour << endl;
+}
+
+void TourDriver::makeBestTour() {
+    Tour baseTour = dna.getBestTour();
+    double firstBestDistance = baseTour.getDistance();
+    Tour currentEliteTour = baseTour;
+    int totalIterations{ 0 };
+    while ( currentEliteTour.getFitness() < fitnessThreshold && totalIterations < MAX_ITER_COUNT ) {
         dna.improve();
-        bestTour = dna.getBestTour();
-        iterations++;
+        Tour newPossibleElite = dna.getBestTour();
+        totalIterations++;
+        report( newPossibleElite, currentEliteTour, firstBestDistance, totalIterations );
+        if ( currentEliteTour.getFitness() < newPossibleElite.getFitness()) {
+            currentEliteTour = newPossibleElite;
+        }
     }
-    return dna.getBestTour();
+    this->bestTour = currentEliteTour;
 }
 
 TourDriver::TourDriver( const int numberOfCities, const int numberOfTours, double fitness_threshold )
-        : fitness_threshold( fitness_threshold), bestTour(){
-    generateCities(numberOfCities);
-    generateTours(numberOfTours);
-    dna = TourDNA{tours};
+        : fitnessThreshold( fitness_threshold ), bestTour() {
+    generateCities( numberOfCities );
+    generateTours( numberOfTours );
+    dna = TourDNA{ tours };
+    makeBestTour();
+}
+
+const Tour &TourDriver::get_best_tour() const {
+    return bestTour;
 }

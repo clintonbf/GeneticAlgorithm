@@ -66,12 +66,17 @@ bool Tour::containsCity( const City &city ) {
     return false;
 }
 
-void Tour::evaluateFitness() {
+double Tour::getDistance() const {
+    double distance{0};
     for ( int i = 0; i < cities.size() - 1; ++i ) {
-        fitness += cities[i].getDistanceTo(cities[i + 1]);
+        distance += cities[i].getDistanceTo(cities[i + 1]);
     }
-    fitness += cities[0].getDistanceTo(cities[cities.size() - 1]);
-    fitness = 1 / fitness;
+    distance += cities[0].getDistanceTo(cities[cities.size() - 1]);
+    return distance;
+}
+
+void Tour::evaluateFitness() {
+    fitness = 1 / getDistance();
 }
 
 ostream &operator<<( ostream &os, const Tour &tour ) {
@@ -82,6 +87,7 @@ ostream &operator<<( ostream &os, const Tour &tour ) {
     return os;
 }
 
-double Tour::get_fitness() const {
+double Tour::getFitness() const {
     return fitness;
 }
+
