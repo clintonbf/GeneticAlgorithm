@@ -8,15 +8,23 @@
 #include "City.hpp"
 
 #include <vector>
+#include <ostream>
+
 #pragma once
+
+using namespace std;
 
 class Tour {
 private:
     vector<City> cities;
     double fitness = 0;
-
+    void evaluateFitness();
+    void swapCities( const int a, const int b);
 public:
-    Tour(vector<City> newCities): cities(newCities){}
+    explicit Tour(vector<City> &newCities): cities(newCities){
+        randomizeOrder();
+        evaluateFitness()
+    }
 
     void mutate(); //Todo: implementation
 
@@ -34,10 +42,11 @@ public:
      * @param city City& the City to search for
      * @return boolean
      */
-    bool containsCity(City& city); //Todo: implementation
+    bool containsCity(const City& city); //Todo: implementation
 
     const vector<City>& getCities() const { return cities; }
 
+    friend ostream &operator<<( ostream &os, const Tour &tour );
 };
 
 

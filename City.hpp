@@ -40,9 +40,13 @@ public:
      * @param otherCity City& the other city
      * @return double
      */
-    double getDistanceTo(City &otherCity) const;
+    double getDistanceTo(const City &otherCity) const;
 
     friend ostream &operator<<( ostream &os, const City &city );
+
+    bool operator==( const City &rhs ) const;
+
+    bool operator!=( const City &rhs ) const;
 };
 
 

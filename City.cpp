@@ -24,7 +24,7 @@ City::City() {
   cityCount++;
 }
 
-double City::getDistanceTo(City &otherCity) const {
+double City::getDistanceTo(const City &otherCity) const {
     int a = abs(xPosition - otherCity.getXPosition());
     int b = abs(yPosition - otherCity.getYPosition());
 
@@ -36,4 +36,14 @@ double City::getDistanceTo(City &otherCity) const {
 ostream &operator<<( ostream &os, const City &city ) {
     os << city.name;
     return os;
+}
+
+bool City::operator==( const City &rhs ) const {
+    return name == rhs.name &&
+           xPosition == rhs.xPosition &&
+           yPosition == rhs.yPosition;
+}
+
+bool City::operator!=( const City &rhs ) const {
+    return !( rhs == *this );
 }
