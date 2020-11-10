@@ -7,6 +7,7 @@
 
 #include <string>
 #include <utility>
+#include <ostream>
 
 using namespace::std;
 
@@ -39,7 +40,9 @@ public:
      * @param otherCity City& the other city
      * @return double
      */
-    double getDistanceTo(City &otherCity);
+    double getDistanceTo(City &otherCity) const;
+
+    friend ostream &operator<<( ostream &os, const City &city );
 };
 
 
