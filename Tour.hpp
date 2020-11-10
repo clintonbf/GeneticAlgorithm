@@ -37,6 +37,9 @@ private:
     */
     void randomizeOrder();
 public:
+
+    Tour() = default;
+
     explicit Tour(vector<City> &newCities): cities(newCities){
         randomizeOrder();
         evaluateFitness();
@@ -54,6 +57,12 @@ public:
      * @param c City& City to add
      */
     void addCity(City& c);
+
+    /**
+     * Get the fitness.
+     * @return the fitness of the tour
+     */
+    double get_fitness() const;
 
     /**
      * Get if a tour contains a City.

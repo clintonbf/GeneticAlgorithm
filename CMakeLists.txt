@@ -3,4 +3,4 @@ project(3522_A02)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(3522_A02 main.cpp City.cpp City.hpp Tour.cpp Tour.hpp)
+add_executable(3522_A02 main.cpp City.cpp City.hpp Tour.cpp Tour.hpp Tour_Dna.cpp Tour_Dna.hpp TourDriver.cpp TourDriver.hpp)

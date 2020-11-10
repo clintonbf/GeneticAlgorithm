@@ -70,6 +70,8 @@ void Tour::evaluateFitness() {
     for ( int i = 0; i < cities.size() - 1; ++i ) {
         fitness += cities[i].getDistanceTo(cities[i + 1]);
     }
+    fitness += cities[0].getDistanceTo(cities[cities.size() - 1]);
+    fitness = 1 / fitness;
 }
 
 ostream &operator<<( ostream &os, const Tour &tour ) {
@@ -78,4 +80,8 @@ ostream &operator<<( ostream &os, const Tour &tour ) {
         os << " " << c;
     }
     return os;
+}
+
+double Tour::get_fitness() const {
+    return fitness;
 }

@@ -28,6 +28,10 @@ public:
     City();
     City(string newName, int newX, int newY): name(std::move(newName)), xPosition(newX), yPosition(newY){}
 
+    /**
+     * Get the position of the city in the X axis.
+     * @return the position of the city in the X axis.
+     */
     int getXPosition() const { return xPosition; }
 
     int getYPosition() const { return yPosition; }
@@ -42,6 +46,12 @@ public:
      */
     double getDistanceTo(const City &otherCity) const;
 
+    /**
+    * Insert a city into output stream
+    * @param os the output stream
+    * @param city a City
+    * @return the output stream, after the fact
+    */
     friend ostream &operator<<( ostream &os, const City &city );
 
     bool operator==( const City &rhs ) const;
