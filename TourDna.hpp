@@ -9,8 +9,8 @@
  * 3522_A02
  */
 
-#ifndef INC_3522_A02_TOUR_DNA_HPP
-#define INC_3522_A02_TOUR_DNA_HPP
+#ifndef INC_3522_A02_TOURDNA_HPP
+#define INC_3522_A02_TOURDNA_HPP
 
 #include <vector>
 #include "Tour.hpp"
@@ -32,4 +32,4 @@ public:
 };
 
 
-#endif //INC_3522_A02_TOUR_DNA_HPP
+#endif //INC_3522_A02_TOURDNA_HPP
