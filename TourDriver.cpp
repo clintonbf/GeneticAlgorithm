@@ -42,13 +42,13 @@ void TourDriver::finalReport( const Tour &newTour, const Tour &baseTour, const i
 }
 
 void TourDriver::makeBestTour() {
-    Tour baseTour = dna.getBestTour();
+    Tour baseTour = dna.getElite();
     double firstBestDistance = baseTour.getDistance();
     Tour currentEliteTour = baseTour;
     int totalIterations{ 0 };
     while ( currentEliteTour.getFitness() < fitnessThreshold && totalIterations < MAX_ITER_COUNT ) {
         dna.improve();
-        Tour newPossibleElite = dna.getBestTour();
+        Tour newPossibleElite = dna.getElite();
         totalIterations++;
         report( newPossibleElite, currentEliteTour, firstBestDistance, totalIterations );
         if ( currentEliteTour.getFitness() < newPossibleElite.getFitness()) {

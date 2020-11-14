@@ -20,15 +20,49 @@ using namespace std;
 class TourDNA {
 private:
     vector<Tour> tours;
-    void findNewElite();
+
+    /*
+     * Finds the fittest Tour in a group of Tours.
+     */
+    int findIndexOfEliteTour(vector<Tour> &toursVector);
+
+    /**
+     * Gets a random integer, inclusive of specified lower and upper bounds.
+     *
+     * @param lowerBound int, lower bound to generate from
+     * @param upperBound  int, upper bound to generate from
+     * @return int
+    */
+    int getRandomInteger(int lowerBound, int upperBound);
+
+    /**
+     * Creates a pool of candidate Tours to select parents from.
+     *
+     * @return vector<Tour>
+     */
+    vector<Tour> createParentPool();
+
+    /**
+     * Performs crossover over of two parent Tours.
+     *
+     * @param buck a parent Tour.
+     * @param doe a parent Tour.
+     * @return Tour
+     */
+    Tour crossParents(const Tour& buck, const Tour& doe);
+
+    /**
+        * Performs the cross-over step of the genetic algorithm.
+        *
+        * @return vector<Tour>
+        */
     void crossover();
-    vector<Tour> selectParents();
+
 public:
     TourDNA() = default;
-    TourDNA( vector<Tour> &tours); // TODO must evaluate the base elite tour in constructor and move to start
-    double getBestFitness();
-    void improve();
-    Tour getBestTour();
+    explicit TourDNA( vector<Tour> &tours);
+    double getBestFitness() { return tours[0].getFitness(); };
+    Tour getElite() { return tours[0]; };
 };
 
 
