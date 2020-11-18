@@ -51,18 +51,17 @@ private:
      */
     Tour crossParents(const Tour& buck, const Tour& doe);
 
-    /**
-        * Performs the cross-over step of the genetic algorithm.
-        *
-        * @return vector<Tour>
-        */
-    void crossover();
-
 public:
     TourDNA() = default;
     explicit TourDNA( vector<Tour> &tours);
     double getBestFitness() { return tours[0].getFitness(); };
     Tour getElite() { return tours[0]; };
+    /**
+    * Performs the cross-over step of the genetic algorithm.
+    *
+    * @return vector<Tour>
+    */
+    void improve();
 };
 
 

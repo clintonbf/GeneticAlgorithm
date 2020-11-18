@@ -82,7 +82,7 @@ Tour TourDNA::crossParents(const Tour& buck, const Tour& doe) {
     return child;
 }
 
-void TourDNA::crossover() {
+void TourDNA::improve() {
     vector<Tour> merge;
     merge.emplace_back(tours[0]);
 
