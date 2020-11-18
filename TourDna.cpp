@@ -45,6 +45,10 @@ int TourDNA::getRandomInteger(int lowerBound, int upperBound) {
     mt19937 generator(rd());
     uniform_int_distribution<> distribution(lowerBound, upperBound);
 
+    if (upperBound < 0) {
+        return 0;
+    }
+
     return distribution(generator);
 }
 
@@ -54,7 +58,7 @@ vector<Tour> TourDNA::createParentPool() {
     vector<Tour> poolVector;
 
     while (pool.size() != poolSize) {
-        int index = getRandomInteger(1, tours.size());
+        int index = getRandomInteger(1, (int) tours.size() - 1);
 
         pool.emplace_back(tours[index]);
     }
@@ -63,38 +67,40 @@ vector<Tour> TourDNA::createParentPool() {
 }
 
 Tour TourDNA::crossParents(const Tour& buck, const Tour& doe) {
-    int indexEnd = getRandomInteger(0, buck.getCities().size());
-    Tour child;
+    int upperBound = (int) buck.getCities().size() - 1;
+
+    int buckIndexToCopyTo = getRandomInteger(0, upperBound);
+    Tour fawn;
 
     vector<City> buckCities = buck.getCities();
     vector<City> doeCities = doe.getCities();
 
-    for (int i = 0; i <= indexEnd; i++) {
-        child.addCity(buckCities[i]);
+    for (int i = 0; i <= buckIndexToCopyTo; i++) { //Step 4.3 of the algorithm
+        fawn.addCity(buckCities[i]); //TODO if buckIndexToCopyTo == 0, a segfault (or something) occurs
     }
 
-    for (int i = (indexEnd + 1); i < doe.getCities().size(); i++) {
-        if (! child.containsCity(doeCities[i])) {
-            child.addCity(doeCities[i]);
+    for (int i = (buckIndexToCopyTo + 1); i < doe.getCities().size(); i++) { //Step 4.3 of the algorithm (cont.)
+        if (! fawn.containsCity(doeCities[i])) {
+            fawn.addCity(doeCities[i]);
         }
     }
 
-    return child;
+    return fawn;
 }
 
 void TourDNA::improve() {
-    vector<Tour> merge;
-    merge.emplace_back(tours[0]);
+    vector<Tour> crossedTours;
+    crossedTours.emplace_back(tours[0]);
 
-    while (merge.size() != tours.size()) {
+    while (crossedTours.size() != tours.size()) {
         vector<Tour> bucks = createParentPool();
         int eliteBuck = findIndexOfEliteTour(bucks);
 
         vector<Tour> does = createParentPool();
         int eliteDoe = findIndexOfEliteTour(does);
 
-        merge.emplace_back(crossParents(bucks[eliteBuck], does[eliteDoe]));
+        crossedTours.emplace_back(crossParents(bucks[eliteBuck], does[eliteDoe]));
     }
 
-    tours = merge;
+    tours = crossedTours;
 }

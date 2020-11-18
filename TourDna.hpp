@@ -53,6 +53,7 @@ private:
 
 public:
     TourDNA() = default;
+
     explicit TourDNA( vector<Tour> &tours);
     double getBestFitness() { return tours[0].getFitness(); };
     Tour getElite() { return tours[0]; };
