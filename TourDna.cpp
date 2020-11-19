@@ -23,7 +23,7 @@ TourDNA::TourDNA( vector<Tour> &tours ) : tours( tours ) {
 }
 
 int TourDNA::findIndexOfEliteTour( vector<Tour> &toursVector ) {
-    double minScore;A
+    double minScore;
     int eliteIndex{0};
     Tour localElite;
 
@@ -31,8 +31,10 @@ int TourDNA::findIndexOfEliteTour( vector<Tour> &toursVector ) {
     minScore = localElite.getFitness();
 
     for ( int i = 0; i < toursVector.size(); i++ ) {
-        if ( toursVector[ i ].getFitness() < minScore ) {
+        double candidateScore = toursVector[ i ].getFitness();
+        if (  candidateScore < minScore ) {
             localElite = toursVector[ i ];
+            minScore = candidateScore;
             eliteIndex = i;
         }
     }
