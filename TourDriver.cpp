@@ -28,9 +28,9 @@ void TourDriver::report( const Tour &newTour, const Tour &oldTour, const double 
                          const int iterations ) const {
     cout << "ITERATION: " << iterations << endl;
     cout << "Best previous distance: " << oldTour.getDistance() << endl;
-    cout << "New distance" << newTour.getDistance() << endl;
-    cout << "Distance improvement" << oldTour.getDistance() - newTour.getDistance() << endl;
-    cout << "Total improvement" << firstBestDistance - newTour.getDistance() << endl;
+    cout << "New distance: " << newTour.getDistance() << endl;
+    cout << "Distance improvement: " << oldTour.getDistance() - newTour.getDistance() << endl;
+    cout << "Total improvement: " << firstBestDistance - newTour.getDistance() << "\n" << endl;
 }
 
 void TourDriver::finalReport( const Tour &newTour, const Tour &baseTour, const int iterations ) {
@@ -56,6 +56,7 @@ void TourDriver::makeBestTour() {
         }
     }
     this->bestTour = currentEliteTour;
+    finalReport(baseTour, currentEliteTour, totalIterations);
 }
 
 TourDriver::TourDriver( const int numberOfCities, const int numberOfTours, double fitness_threshold )

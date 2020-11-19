@@ -94,7 +94,7 @@ Tour &Tour::operator=( Tour rhs ) {
 }
 
 ostream &operator<<( ostream &os, const Tour &tour ) {
-    os << "fitness: " << tour.fitness << "cities:";
+    os << "fitness: " << tour.fitness << " cities: ";
     for (const City &c : tour.cities) {
         os << " " << c;
     }
