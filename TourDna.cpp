@@ -23,7 +23,7 @@ TourDNA::TourDNA( vector<Tour> &tours ) : tours( tours ) {
 }
 
 int TourDNA::findIndexOfEliteTour( vector<Tour> &toursVector ) {
-    double minScore;A
+    double minScore;
     int eliteIndex{0};
     Tour localElite;
 
