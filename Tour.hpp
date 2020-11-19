@@ -45,6 +45,8 @@ public:
         evaluateFitness();
     }
 
+    Tour(const Tour &other);
+
     /**
      * Slightly change the order of the cities in tour.
      *
@@ -84,6 +86,8 @@ public:
      */
     const vector<City>& getCities() const { return cities; }
 
+    Tour & operator=(Tour rhs);
+
     /**
      * Insert a tour into output stream
      * @param os the output stream
@@ -91,6 +95,11 @@ public:
      * @return the output stream, after the fact
      */
     friend ostream &operator<<( ostream &os, const Tour &tour );
+
+    /**
+     * Assignment operator helper
+     */
+    friend void swapTour( Tour &lhs, Tour &rhs );
 };
 
 

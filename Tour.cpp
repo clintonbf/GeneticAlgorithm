@@ -11,6 +11,10 @@
 #include <random>
 #include "Tour.hpp"
 
+Tour::Tour( const Tour &other ) {
+    cities = other.cities;
+    fitness = other.fitness;
+}
 
 void Tour::mutate() {
     random_device rd;
@@ -77,6 +81,16 @@ double Tour::getDistance() const {
 
 void Tour::evaluateFitness() {
     fitness = 1 / getDistance();
+}
+
+void swapTour(Tour &lhs, Tour &rhs) {
+    swap(lhs.cities, rhs.cities);
+    swap(lhs.fitness, rhs.fitness);
+}
+
+Tour &Tour::operator=( Tour rhs ) {
+    swapTour(*this, rhs);
+    return *this;
 }
 
 ostream &operator<<( ostream &os, const Tour &tour ) {

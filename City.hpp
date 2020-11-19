@@ -26,8 +26,7 @@ public:
     static int cityCount;
 
     City();
-    City(string newName, int newX, int newY): name(std::move(newName)), xPosition(newX), yPosition(newY){}
-
+    City(const City &other);
     /**
      * Get the position of the city in the X axis.
      * @return the position of the city in the X axis.
@@ -57,6 +56,10 @@ public:
     bool operator==( const City &rhs ) const;
 
     bool operator!=( const City &rhs ) const;
+
+    City & operator=(City rhs);
+
+    friend void swapCity(City &lhs, City &rhs);
 };
 
 

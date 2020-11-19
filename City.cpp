@@ -12,6 +12,12 @@
 
 int City::cityCount = 1;
 
+City::City( const City &other ) {
+    name = other.name;
+    xPosition = other.xPosition;
+    yPosition = other.yPosition;
+}
+
 City::City() {
   random_device rd;
   mt19937 generator(rd());
@@ -47,3 +53,15 @@ bool City::operator==( const City &rhs ) const {
 bool City::operator!=( const City &rhs ) const {
     return !( rhs == *this );
 }
+
+City &City::operator=( City rhs ) {
+    swapCity(*this, rhs);
+    return *this;
+}
+
+void swapCity( City &lhs, City &rhs ) {
+    swap(lhs.name, rhs.name);
+    swap(lhs.xPosition, rhs.xPosition);
+    swap(lhs.yPosition, rhs.yPosition);
+}
+
