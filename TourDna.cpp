@@ -43,7 +43,7 @@ int TourDNA::findIndexOfEliteTour(vector<Tour> &toursVector) {
 int TourDNA::getRandomInteger(int lowerBound, int upperBound) {
     random_device rd;
     mt19937 generator(rd());
-    uniform_int_distribution<> distribution(lowerBound, upperBound);
+    uniform_int_distribution<> distribution(lowerBound, upperBound - 1);
 
     if (upperBound < 0) {
         return 0;
@@ -58,7 +58,7 @@ vector<Tour> TourDNA::createParentPool() {
     vector<Tour> poolVector;
 
     while (pool.size() != poolSize) {
-        int index = getRandomInteger(1, (int) tours.size() - 1);
+        int index = getRandomInteger(1, (int)tours.size());
 
         pool.emplace_back(tours[index]);
     }
@@ -67,7 +67,7 @@ vector<Tour> TourDNA::createParentPool() {
 }
 
 Tour TourDNA::crossParents(const Tour& buck, const Tour& doe) {
-    int upperBound = (int) buck.getCities().size() - 1;
+    int upperBound = (int) buck.getCities().size();
 
     int buckIndexToCopyTo = getRandomInteger(0, upperBound);
     Tour fawn;

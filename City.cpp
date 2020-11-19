@@ -20,7 +20,7 @@ City::City() {
   xPosition = distribution(generator);
   yPosition = distribution(generator);
 
-  name = "city_" + std::to_string(cityCount);
+  name = "city_" + std::to_string(cityCount++);
   cityCount++;
 }
 

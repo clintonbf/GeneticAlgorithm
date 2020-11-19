@@ -30,7 +30,7 @@ private:
      * Gets a random integer, inclusive of specified lower and upper bounds.
      *
      * @param lowerBound int, lower bound to generate from
-     * @param upperBound  int, upper bound to generate from
+     * @param upperBound  int, upper bound to generate from, not inclusive
      * @return int
     */
     int getRandomInteger(int lowerBound, int upperBound);
