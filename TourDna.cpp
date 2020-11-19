@@ -73,10 +73,10 @@ Tour TourDNA::crossParents(const Tour& buck, const Tour& doe) {
     Tour fawn;
 
     vector<City> buckCities = buck.getCities();
-    vector<City> doeCities = doe.getCities();
+    vector<City> doeCities = doe.getCities(); // This line will empty the vector above.
 
     for (int i = 0; i <= buckIndexToCopyTo; i++) { //Step 4.3 of the algorithm
-        fawn.addCity(buckCities[i]); //TODO if buckIndexToCopyTo == 0, a segfault (or something) occurs
+        fawn.addCity(buckCities[i]);
     }
 
     for (int i = (buckIndexToCopyTo + 1); i < doe.getCities().size(); i++) { //Step 4.3 of the algorithm (cont.)
@@ -92,6 +92,8 @@ void TourDNA::improve() {
     vector<Tour> crossedTours;
     crossedTours.emplace_back(tours[0]);
 
+    //4.3 Pick two sets of 5 random tours form the original population
+    // Find the fittest two parents in each set
     while (crossedTours.size() != tours.size()) {
         vector<Tour> bucks = createParentPool();
         int eliteBuck = findIndexOfEliteTour(bucks);
@@ -99,7 +101,11 @@ void TourDNA::improve() {
         vector<Tour> does = createParentPool();
         int eliteDoe = findIndexOfEliteTour(does);
 
-        crossedTours.emplace_back(crossParents(bucks[eliteBuck], does[eliteDoe]));
+        Tour& buck = bucks[eliteBuck];
+        Tour& doe = does[eliteDoe];
+
+        //Cross the parents
+        crossedTours.emplace_back(crossParents(buck, doe));
     }
 
     tours = crossedTours;

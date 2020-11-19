@@ -76,6 +76,8 @@ public:
      */
     const Tour &get_best_tour() const;
 
+    vector<Tour> getTours() { return tours; }
+
 };
 
 
