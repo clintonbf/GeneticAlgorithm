@@ -23,7 +23,7 @@ TourDNA::TourDNA( vector<Tour> &tours ) : tours( tours ) {
 }
 
 int TourDNA::findIndexOfEliteTour( vector<Tour> &toursVector ) {
-    double minScore;
+    double minScore;A
     int eliteIndex{0};
     Tour localElite;
 
@@ -92,14 +92,15 @@ void TourDNA::improve() {
     vector<Tour> crossedTours;
     crossedTours.emplace_back( tours[ 0 ] );
 
+    // TODO remove when done debugging
     for ( int i = 0; i < tours.size(); i++) {
         vector<City> cities = tours[i].getCities();
         if (cities.size() != 32) {
-            int foo(0);
+            int foo(0); // TODO breakpoint here
         }
         for (const City &c : cities) {
             if (c.getName().empty()) {
-                int fooo(0);
+                int fooo(0);// TODO breakpoint here
             }
         }
     }
