@@ -20,11 +20,20 @@ using namespace std;
 class TourDNA {
 private:
     vector<Tour> tours;
+    //The purpose of this variable is to short-circuit searching for a new elite
+    //if there's no reason to suspect a new one is present
+    // (i.e. you haven't done any crossovers, mutations, etc)
+    bool thereIsAReasonToBelieveThereIsANewElite;
 
     /*
      * Finds the fittest Tour in a group of Tours.
      */
     int findIndexOfEliteTour(vector<Tour> &toursVector);
+
+    /**
+     * Makes a Tour the Elite tour.
+     */
+    void promoteElite();
 
     /**
      * Gets a random integer, inclusive of specified lower and upper bounds.
@@ -33,7 +42,7 @@ private:
      * @param upperBound  int, upper bound to generate from, not inclusive
      * @return int
     */
-    int getRandomInteger(int lowerBound, int upperBound);
+    static int getRandomInteger(int lowerBound, int upperBound);
 
     /**
      * Creates a pool of candidate Tours to select parents from.
@@ -51,18 +60,29 @@ private:
      */
     Tour crossParents(const Tour& buck, const Tour& doe);
 
+    /**
+     * Performs the crossing-over stage of the genetic algorithm.
+     */
+    void crossover();
+
+    /**
+     * Mutates every Tour (except the Elite)
+     */
+    void mutate();
+
 public:
     TourDNA() = default;
-
     explicit TourDNA( vector<Tour> &tours);
-    double getBestFitness() { return tours[0].getFitness(); };
-    Tour getElite() { return tours[0]; };
+
+    Tour getElite();
+    vector<Tour> getTours() const { return tours; }
+
     /**
-    * Performs the cross-over step of the genetic algorithm.
-    *
-    * @return vector<Tour>
+    * Performs crossing-over and mutation in the genetic algorithm.
     */
     void improve();
+
+    friend ostream& operator<< (ostream& os, const TourDNA& t);
 };
 
 

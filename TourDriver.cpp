@@ -61,10 +61,23 @@ void TourDriver::makeBestTour() {
 
 TourDriver::TourDriver( const int numberOfCities, const int numberOfTours, double fitness_threshold )
         : fitnessThreshold( fitness_threshold ), bestTour() {
-    generateCities( numberOfCities );
-    generateTours( numberOfTours );
-    dna = TourDNA{ tours };
-    makeBestTour();
+    generateCities(numberOfCities);
+    generateTours(numberOfTours);
+    dna = TourDNA{tours};
+
+//    debugging
+    cout << "After construction (including promotion) " << endl;
+    cout << dna;
+
+    dna.improve();
+    dna.getElite();
+
+    cout << "*****Improvement complete; elite promoted; new population:" << endl;
+
+    cout << dna;
+
+ // /debugging
+//    makeBestTour();
 }
 
 const Tour &TourDriver::get_best_tour() const {

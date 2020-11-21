@@ -9,24 +9,28 @@
  * 3522_A02
  */
 
+#include <iostream>
 #include <set>
 #include <random>
 
 #include "TourDna.hpp"
 
 TourDNA::TourDNA( vector<Tour> &tours ) : tours( tours ) {
-    int eliteIndex = findIndexOfEliteTour( tours );
+    cout << "Initial list of tours: " << endl;
+    for (const Tour& t: tours) {
+        cout << t << endl;
+    }
 
-    Tour &tempTour = tours[ 0 ];
-    tours[ 0 ] = tours[ eliteIndex ];
-    tours[ eliteIndex ] = tempTour;
+    cout << "*******" << endl;
+    promoteElite();
+
+    thereIsAReasonToBelieveThereIsANewElite = false;
 }
 
 int TourDNA::findIndexOfEliteTour( vector<Tour> &toursVector ) {
     double minScore;
     int eliteIndex{0};
     Tour localElite;
-
     localElite = toursVector[ 0 ];
     minScore = localElite.getFitness();
 
@@ -42,16 +46,19 @@ int TourDNA::findIndexOfEliteTour( vector<Tour> &toursVector ) {
     return eliteIndex;
 }
 
-int TourDNA::getRandomInteger( int lowerBound, int upperBound ) {
-    if ( upperBound <= lowerBound ) {
-        return lowerBound;
+void TourDNA::promoteElite() {
+    int eliteIndex = findIndexOfEliteTour( tours );
+
+    using std::swap;
+    swap(tours[0], tours[eliteIndex]);
+}
+
+Tour TourDNA::getElite() {
+    if (thereIsAReasonToBelieveThereIsANewElite) {
+        promoteElite();
     }
-    random_device rd;
-    mt19937 generator( rd());
-    uniform_int_distribution<> distribution( lowerBound, upperBound - 1 );
 
-
-    return distribution( generator );
+    return tours[0];
 }
 
 vector<Tour> TourDNA::createParentPool() {
@@ -87,18 +94,21 @@ Tour TourDNA::crossParents( const Tour &buck, const Tour &doe ) {
         }
     }
 
+    fawn.evaluateFitness();
     return fawn;
 }
 
-void TourDNA::improve() {
+void TourDNA::crossover() {
     vector<Tour> crossedTours;
     crossedTours.emplace_back( tours[ 0 ] );
+    int numberOfCitiesOfWeirdSize = 0;
 
     // TODO remove when done debugging
     for ( int i = 0; i < tours.size(); i++) {
         vector<City> cities = tours[i].getCities();
         if (cities.size() != 32) {
             int foo(0); // TODO breakpoint here
+            numberOfCitiesOfWeirdSize++;
         }
         for (const City &c : cities) {
             if (c.getName().empty()) {
@@ -123,5 +133,36 @@ void TourDNA::improve() {
         crossedTours.emplace_back( crossParents( buck, doe ));
     }
 
+    //4.4 Replace all the Tours in our Population (except the Elite Tour) with the new crosses.
     tours = crossedTours;
+}
+
+void TourDNA::mutate() {
+    for (int i = 1; i < tours.size(); i++) {
+        tours.at(i).mutate();
+    }
+}
+
+void TourDNA::improve() {
+    crossover();
+    mutate();
+    thereIsAReasonToBelieveThereIsANewElite = true;
+}
+
+ostream& operator<< (ostream& os, const TourDNA& t) {
+    for (Tour tour: t.getTours()) {
+        cout << tour << endl;
+    }
+}
+
+int TourDNA::getRandomInteger( int lowerBound, int upperBound ) {
+    if ( upperBound <= lowerBound ) {
+        return lowerBound;
+    }
+    random_device rd;
+    mt19937 generator( rd());
+    uniform_int_distribution<> distribution( lowerBound, upperBound - 1 );
+
+
+    return distribution( generator );
 }

@@ -21,11 +21,6 @@ private:
     double fitness = 0;
 
     /**
-     * Evaluate the fitness of the tour.
-     */
-    void evaluateFitness();
-
-    /**
      * Swap the positions of two cities in the tour
      * @param a index of a city
      * @param b index of a city
@@ -44,6 +39,11 @@ public:
         randomizeOrder();
         evaluateFitness();
     }
+
+    /**
+    * Evaluate the fitness of the tour.
+    */
+    void evaluateFitness();
 
     Tour(const Tour &other);
 
