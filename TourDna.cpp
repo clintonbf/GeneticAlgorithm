@@ -16,14 +16,7 @@
 #include "TourDna.hpp"
 
 TourDNA::TourDNA( vector<Tour> &tours ) : tours( tours ) {
-    cout << "Initial list of tours: " << endl;
-    for (const Tour& t: tours) {
-        cout << t << endl;
-    }
-
-    cout << "*******" << endl;
     promoteElite();
-
     thereIsAReasonToBelieveThereIsANewElite = false;
 }
 
