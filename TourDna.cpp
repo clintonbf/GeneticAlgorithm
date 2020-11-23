@@ -96,20 +96,6 @@ void TourDNA::crossover() {
     crossedTours.emplace_back( tours[ 0 ] );
     int numberOfCitiesOfWeirdSize = 0;
 
-    // TODO remove when done debugging
-    for ( int i = 0; i < tours.size(); i++) {
-        vector<City> cities = tours[i].getCities();
-        if (cities.size() != 32) {
-            int foo(0); // TODO breakpoint here
-            numberOfCitiesOfWeirdSize++;
-        }
-        for (const City &c : cities) {
-            if (c.getName().empty()) {
-                int fooo(0);// TODO breakpoint here
-            }
-        }
-    }
-
     //4.3 Pick two sets of 5 random tours form the original population
     // Find the fittest two parents in each set
     while ( crossedTours.size() != tours.size()) {
@@ -143,7 +129,7 @@ void TourDNA::improve() {
 }
 
 ostream& operator<< (ostream& os, const TourDNA& t) {
-    for (Tour tour: t.getTours()) {
+    for (const Tour& tour: t.getTours()) {
         cout << tour << endl;
     }
 }
@@ -155,7 +141,6 @@ int TourDNA::getRandomInteger( int lowerBound, int upperBound ) {
     random_device rd;
     mt19937 generator( rd());
     uniform_int_distribution<> distribution( lowerBound, upperBound - 1 );
-
 
     return distribution( generator );
 }
