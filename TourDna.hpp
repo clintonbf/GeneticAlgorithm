@@ -20,10 +20,6 @@ using namespace std;
 class TourDNA {
 private:
     vector<Tour> tours;
-    //The purpose of this variable is to short-circuit searching for a new elite
-    //if there's no reason to suspect a new one is present
-    // (i.e. you haven't done any crossovers, mutations, etc)
-    bool thereIsAReasonToBelieveThereIsANewElite;
 
     /*
      * Finds the fittest Tour in a group of Tours.
@@ -72,9 +68,20 @@ private:
 
 public:
     TourDNA() = default;
-    explicit TourDNA( vector<Tour> &tours);
+    explicit TourDNA( vector<Tour> &tours ) : tours( tours ) {  }
 
+    /**
+     * Gets the current elite Tour in the set of Tours.
+     *
+     * @return Tour
+     */
     Tour getElite();
+
+    /**
+     * Gets the Tours in the set.
+     *
+     * @return vector<Tour>
+     */
     vector<Tour> getTours() const { return tours; }
 
     /**

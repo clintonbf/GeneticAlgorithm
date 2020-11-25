@@ -15,11 +15,6 @@
 
 #include "TourDna.hpp"
 
-TourDNA::TourDNA( vector<Tour> &tours ) : tours( tours ) {
-    promoteElite();
-    thereIsAReasonToBelieveThereIsANewElite = false;
-}
-
 int TourDNA::findIndexOfEliteTour( vector<Tour> &toursVector ) {
     double minScore;
     int eliteIndex{0};
@@ -47,10 +42,6 @@ void TourDNA::promoteElite() {
 }
 
 Tour TourDNA::getElite() {
-    if (thereIsAReasonToBelieveThereIsANewElite) {
-        promoteElite();
-    }
-
     return tours[0];
 }
 
@@ -60,6 +51,7 @@ vector<Tour> TourDNA::createParentPool() {
     vector<Tour> poolVector;
 
     while ( pool.size() != poolSize ) {
+        //lowerBound = 1 to prevent including the elite in the pool
         int index = getRandomInteger( 1, ( int ) tours.size());
 
         pool.emplace_back( tours[ index ] );
@@ -75,30 +67,32 @@ Tour TourDNA::crossParents( const Tour &buck, const Tour &doe ) {
     Tour fawn;
 
     vector<City> buckCities = buck.getCities();
-    vector<City> doeCities = doe.getCities(); // This line will empty the vector above.
+    vector<City> doeCities = doe.getCities();
 
     for ( int i = 0; i <= buckIndexToCopyTo; i++ ) { //Step 4.3 of the algorithm
-        fawn.addCity( buckCities[ i ] );
+        fawn.addCity( buckCities.at(i) );
     }
 
-    for ( int i = ( buckIndexToCopyTo + 1 ); i < doe.getCities().size(); i++ ) { //Step 4.3 of the algorithm (cont.)
-        if ( !fawn.containsCity( doeCities[ i ] )) {
-            fawn.addCity( doeCities[ i ] );
+    int doeSize = doeCities.size();
+
+    for ( int i = ( buckIndexToCopyTo + 1 ); i < doeSize; i++ ) { //Step 4.3 of the algorithm (cont.)
+        if ( !fawn.containsCity( doeCities.at(i) )) {
+            fawn.addCity( doeCities.at(i) );
         }
     }
 
     fawn.evaluateFitness();
+    cout << "Buck size: " << buckCities.size() << " and Doe size is : " << doeCities.size() << " and Fawn size is " << fawn.getCities().size() << endl;
     return fawn;
 }
 
 void TourDNA::crossover() {
-    vector<Tour> crossedTours;
-    crossedTours.emplace_back( tours[ 0 ] );
-    int numberOfCitiesOfWeirdSize = 0;
+    vector<Tour> fawns;
+    fawns.emplace_back(tours[ 0 ] ); //This is the elite
 
     //4.3 Pick two sets of 5 random tours form the original population
     // Find the fittest two parents in each set
-    while ( crossedTours.size() != tours.size()) {
+    while (fawns.size() != tours.size()) {
         vector<Tour> bucks = createParentPool();
         int eliteBuck = findIndexOfEliteTour( bucks );
 
@@ -109,23 +103,24 @@ void TourDNA::crossover() {
         Tour doe = does[ eliteDoe ];
 
         //Cross the parents
-        crossedTours.emplace_back( crossParents( buck, doe ));
+        fawns.emplace_back( crossParents(buck, doe) );
     }
 
     //4.4 Replace all the Tours in our Population (except the Elite Tour) with the new crosses.
-    tours = crossedTours;
+    tours = fawns;
 }
 
 void TourDNA::mutate() {
+    //Start at 1: don't mutate elite
     for (int i = 1; i < tours.size(); i++) {
         tours.at(i).mutate();
     }
 }
 
 void TourDNA::improve() {
-    crossover();
-    mutate();
-    thereIsAReasonToBelieveThereIsANewElite = true;
+    promoteElite(); // Step 3
+    crossover();    //Step 4
+    mutate();       //Step 4 (cont)
 }
 
 ostream& operator<< (ostream& os, const TourDNA& t) {
