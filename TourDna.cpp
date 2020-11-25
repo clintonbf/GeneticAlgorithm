@@ -75,7 +75,7 @@ Tour TourDNA::crossParents( const Tour &buck, const Tour &doe ) {
 
     int doeSize = doeCities.size();
 
-    for ( int i = ( buckIndexToCopyTo + 1 ); i < doeSize; i++ ) { //Step 4.3 of the algorithm (cont.)
+    for ( int i = 0; i < doeSize; i++ ) { //Step 4.3 of the algorithm (cont.)
         if ( !fawn.containsCity( doeCities.at(i) )) {
             fawn.addCity( doeCities.at(i) );
         }
