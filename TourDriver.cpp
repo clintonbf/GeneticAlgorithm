@@ -46,15 +46,19 @@ void TourDriver::makeBestTour() {
     double firstBestDistance = baseTour.getDistance();
     Tour currentEliteTour = baseTour;
     int totalIterations{ 0 };
+
     while ( currentEliteTour.getFitness() < fitnessThreshold && totalIterations < MAX_ITER_COUNT ) {
         dna.improve();
         Tour newPossibleElite = dna.getElite();
         totalIterations++;
+
         report( newPossibleElite, currentEliteTour, firstBestDistance, totalIterations );
+
         if ( currentEliteTour.getFitness() < newPossibleElite.getFitness()) {
             currentEliteTour = newPossibleElite;
         }
     }
+
     this->bestTour = currentEliteTour;
     finalReport(baseTour, currentEliteTour, totalIterations);
 }

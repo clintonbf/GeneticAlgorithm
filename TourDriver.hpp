@@ -31,14 +31,14 @@ private:
      * @param newTour the last best tour
      * @param baseTour the first best tour
      */
-    void finalReport( const Tour &newTour, const Tour &baseTour, const int iterations );
+    void finalReport( const Tour &newTour, const Tour &baseTour, int iterations);
 
     /**
      * Print iteration report.
      * @param newTour the new best tour
      * @param baseTour the previous best tour
      */
-    void report( const Tour &newTour, const Tour &oldTour, const double firstBestDistance, const int iterations ) const;
+    void report( const Tour &newTour, const Tour &oldTour, double firstBestDistance, int iterations ) const;
 
     /**
      * Generates a given number of tours based on the instance cities.
@@ -68,7 +68,7 @@ public:
      * @param numberOfTours the number or tours to evaluate
      * @param fitness_threshold the desired fitness threshold
      */
-    TourDriver( const int numberOfCities, const int numberOfTours, const double fitness_threshold );
+    TourDriver( int numberOfCities, int numberOfTours, double fitness_threshold );
 
     /**
      * Get the best tour.
@@ -77,7 +77,6 @@ public:
     const Tour &get_best_tour() const;
 
     vector<Tour> getTours() { return tours; }
-
 };
 
 
