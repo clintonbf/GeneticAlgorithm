@@ -48,11 +48,10 @@ Tour TourDNA::getElite() {
 vector<Tour> TourDNA::createParentPool() {
     constexpr int poolSize = 5;
     vector<Tour> pool;
-    vector<Tour> poolVector;
 
-    while ( pool.size() != poolSize ) {
+    for (int i = 0; i < poolSize; i++) {
         //lowerBound = 1 to prevent including the elite in the pool
-        int index = getRandomInteger( 1, ( int ) tours.size());
+        int index = getRandomInteger( 1, ( (int) tours.size() - 1) );
 
         pool.emplace_back( tours[ index ] );
     }
@@ -63,7 +62,7 @@ vector<Tour> TourDNA::createParentPool() {
 Tour TourDNA::crossParents( const Tour &buck, const Tour &doe ) {
     int upperBound = ( int ) buck.getCities().size();
 
-    int buckIndexToCopyTo = getRandomInteger( 0, upperBound );
+    int buckIndexToCopyTo = getRandomInteger( 0, (upperBound - 1) );
     Tour fawn;
 
     vector<City> buckCities = buck.getCities();
@@ -76,14 +75,14 @@ Tour TourDNA::crossParents( const Tour &buck, const Tour &doe ) {
     int doeSize = doeCities.size();
 
     for ( int i = 0; i < doeSize; i++ ) { //Step 4.3 of the algorithm (cont.)
-        if ( !fawn.containsCity( doeCities.at(i) )) {
+        if ( !fawn.containsCity( doeCities.at(i) ) ) {
             fawn.addCity( doeCities.at(i) );
         }
     }
 
     fawn.evaluateFitness();
-    cout << "Buck size: " << buckCities.size() << " and Doe size is : " << doeCities.size() << " and Fawn size is " << fawn.getCities().size() << endl;
-    return fawn;
+
+   return fawn;
 }
 
 void TourDNA::crossover() {
@@ -92,18 +91,19 @@ void TourDNA::crossover() {
 
     //4.3 Pick two sets of 5 random tours form the original population
     // Find the fittest two parents in each set
-    while (fawns.size() != tours.size()) {
+    while (fawns.size() < tours.size()) {
         vector<Tour> bucks = createParentPool();
-        int eliteBuck = findIndexOfEliteTour( bucks );
+        int eliteBuckIndex = findIndexOfEliteTour(bucks );
 
         vector<Tour> does = createParentPool();
-        int eliteDoe = findIndexOfEliteTour( does );
+        int eliteDoeIndex = findIndexOfEliteTour(does );
 
-        Tour buck = bucks[ eliteBuck ];
-        Tour doe = does[ eliteDoe ];
+        Tour buck = bucks[ eliteBuckIndex ];
+        Tour doe = does[ eliteDoeIndex ];
 
         //Cross the parents
-        fawns.emplace_back( crossParents(buck, doe) );
+        Tour fawn = crossParents(buck, doe);
+        fawns.emplace_back( fawn );
     }
 
     //4.4 Replace all the Tours in our Population (except the Elite Tour) with the new crosses.
@@ -118,7 +118,7 @@ void TourDNA::mutate() {
 }
 
 void TourDNA::improve() {
-    promoteElite(); // Step 3
+    promoteElite(); //Step 3
     crossover();    //Step 4
     mutate();       //Step 4 (cont)
 }
@@ -135,7 +135,7 @@ int TourDNA::getRandomInteger( int lowerBound, int upperBound ) {
     }
     random_device rd;
     mt19937 generator( rd());
-    uniform_int_distribution<> distribution( lowerBound, upperBound - 1 );
+    uniform_int_distribution<> distribution( lowerBound, upperBound );
 
     return distribution( generator );
 }
