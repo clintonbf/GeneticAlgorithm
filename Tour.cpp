@@ -28,27 +28,21 @@ void Tour::mutate() {
         // mutate
         // first and last cities only have one adjacent city each
         if (i == 0) {
-            swapCities(0, 1);
+            swap(cities[0], cities[1]);
             continue;
         }
         if (i == cities.size() - 1) {
-            swapCities(cities.size() - 2, i);
+            swap(cities[cities.size() - 2], cities[i]);
             continue;
         }
         double adjacentCityChoice = distribution(generator);
         if (adjacentCityChoice < 0.5) {
-            swapCities(i - 1, i);
+            swap(cities[i - 1], cities[i]);
         } else {
-            swapCities(i + 1, i);
+            swap(cities[i + 1], cities[i]);
         }
     }
     evaluateFitness();
-}
-
-void Tour::swapCities( const unsigned long a, const unsigned long b) {
-    City &t = cities[a];
-    cities[a] = cities[b];
-    cities[b] = t;
 }
 
 void Tour::randomizeOrder() {

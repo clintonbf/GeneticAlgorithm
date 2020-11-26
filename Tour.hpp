@@ -16,16 +16,9 @@ using namespace std;
 
 class Tour {
 private:
-    static constexpr double MUTATION_RATE = 0.15;
+    static constexpr double MUTATION_RATE = 0.85;
     vector<City> cities;
     double fitness = 0;
-
-    /**
-     * Swap the positions of two cities in the tour
-     * @param a index of a city
-     * @param b index of a city
-     */
-    void swapCities( unsigned long a, unsigned long b);
 
     /**
     * Randomize the order of the tour

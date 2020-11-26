@@ -24,7 +24,7 @@ private:
     /*
      * Finds the fittest Tour in a group of Tours.
      */
-    int findIndexOfEliteTour(vector<Tour> &toursVector);
+    static int findIndexOfEliteTour(vector<Tour> &toursVector);
 
     /**
      * Makes a Tour the Elite tour.
