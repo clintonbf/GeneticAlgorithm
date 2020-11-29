@@ -29,8 +29,15 @@ void TourDriver::report( const Tour &newTour, const Tour &oldTour, const double 
     cout << "ITERATION: " << iterations << endl;
     cout << "Best previous distance: " << oldTour.getDistance() << endl;
     cout << "New distance: " << newTour.getDistance() << endl;
-    cout << "Distance improvement: " << oldTour.getDistance() - newTour.getDistance() << endl;
-    cout << "Total improvement: " << firstBestDistance - newTour.getDistance() << "\n" << endl;
+    if (newTour.getDistance() < oldTour.getDistance()) {
+        cout << "Distance improvement: " << oldTour.getDistance() - newTour.getDistance() << endl;
+        cout << "Total improvement: " << firstBestDistance - newTour.getDistance() << "\n" << endl;
+        cout << "Continue?" << endl;
+        int cont;
+        cin >> cont;
+    } else {
+        cout << "No distance improvement" << endl;
+    }
 }
 
 void TourDriver::finalReport( const Tour &newTour, const Tour &baseTour, const int iterations ) {
